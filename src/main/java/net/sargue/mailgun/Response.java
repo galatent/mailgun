@@ -10,9 +10,11 @@ public class Response {
 
     private ResponseType responseType;
     private int responseCode;
+    private String responseMessage;
 
     Response(javax.ws.rs.core.Response response) {
         responseCode = response.getStatus();
+        responseMessage = response.readEntity(String.class);
         switch (responseCode) {
             case 200:
                 responseType = ResponseType.OK;
@@ -54,6 +56,15 @@ public class Response {
     public int responseCode() {
         return responseCode;
     }
+    
+    /**
+     * The HTTP message body of the response.
+     *
+     * @return the HTTP message body of the response
+     */
+    public String responseMessage() {
+        return responseMessage;
+    }
 
     /**
      * Shortcut method for checking if the response is ok. Equivalent of
@@ -65,3 +76,4 @@ public class Response {
         return responseType == ResponseType.OK;
     }
 }
+
